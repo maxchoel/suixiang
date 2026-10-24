@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light" />
+<title>随想</title>
+<meta name="description" content="一个只存在浏览器里的极简日记，记录日常所思所想。" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23111111'/%3E%3Ctext x='32' y='45' font-size='32' text-anchor='middle' fill='%23ffffff' font-family='KaiTi,serif'%3E%E9%9A%8F%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <h1 class="brand">随想</h1>
+    <span class="today" id="todayText"></span>
+    <div class="top-actions">
+      <button class="account-btn" id="accountBtn" type="button" hidden>登录同步</button>
+      <div class="search">
+        <svg class="icon search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16.2 16.2 4.3 4.3"/></svg>
+        <input id="searchInput" type="search" placeholder="搜索" autocomplete="off" spellcheck="false" aria-label="搜索记录" />
+        <button class="search-clear" id="searchClear" type="button" aria-label="清除搜索" hidden>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="shell">
+
+    <section class="composer" id="composer" aria-label="写一条记录">
+      <label class="sr-only" for="composeText">写点什么</label>
+      <textarea id="composeText" placeholder="此刻在想什么？" rows="3" spellcheck="false"></textarea>
+      <div class="composer-foot">
+        <span class="draft-hint" id="draftHint" hidden>已恢复未保存的内容<button type="button" id="discardDraft">丢弃</button></span>
+        <span class="char-count" id="charCount">0 字</span>
+        <button class="btn-primary" id="saveBtn" type="button" disabled>保存</button>
+      </div>
+    </section>
+
+    <section class="feed" aria-labelledby="feedTitle">
+      <div class="feed-head">
+        <h2 id="feedTitle">记录</h2>
+        <span class="feed-count" id="feedCount"></span>
+      </div>
+      <div id="timeline"></div>
+    </section>
+
+    <footer class="site-foot">
+      <span id="footNote">仅保存在此浏览器</span>
+      <div class="foot-actions">
+        <button type="button" id="exportBtn">导出备份</button>
+        <button type="button" id="importBtn">导入</button>
+      </div>
+      <input type="file" id="fileInput" accept="application/json,.json" aria-label="选择备份文件" hidden />
+    </footer>
+
+  </div>
+</main>
+
+<div class="modal" id="syncModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="syncTitle">
+    <button class="modal-close" type="button" data-close="syncModal" aria-label="关闭">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+    <h2 id="syncTitle">同步</h2>
+    <p class="modal-lead" id="syncLead">登录后，记录会在你的手机和电脑之间同步。</p>
+
+    <form id="authForm" novalidate>
+      <label class="auth-field">邮箱
+        <input id="authEmail" type="email" autocomplete="email" spellcheck="false" required />
+      </label>
+      <label class="auth-field">密码
+        <input id="authPassword" type="password" autocomplete="current-password" minlength="6" required />
+      </label>
+      <p class="auth-error" id="authError" hidden></p>
+      <div class="auth-actions">
+        <button class="btn-primary" id="authSubmit" type="submit">登录</button>
+        <button class="link-btn" id="authSwitch" type="button">没有账号？注册</button>
+      </div>
+    </form>
+
+    <div id="syncPanel" hidden>
+      <p class="sync-email" id="syncEmail"></p>
+      <p class="sync-status" id="syncStatus"></p>
+      <div class="sync-actions">
+        <button class="btn-secondary" id="syncNowBtn" type="button">立即同步</button>
+        <button class="link-btn" id="signOutBtn" type="button">退出登录</button>
+      </div>
+    </div>
+
+    <p class="modal-foot" id="syncFoot">记录保存在你自己的 Supabase 项目里，只有你能读取。</p>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<noscript>
+  <div class="noscript">「随想」需要启用 JavaScript 才能记录内容。</div>
+</noscript>
+
+<script src="assets/sync-config.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Windows 系统文件
+Thumbs.db
+desktop.ini
+Desktop.ini
+
+# Office / 编辑器临时文件
+~$*
+*.tmp
+*.bak
+*.swp
+
+# macOS
+.DS_Store
+._*
+
+# 导出的备份（个人数据，不要提交）
+suixiang-backup*.json
+*-backup-*.json
